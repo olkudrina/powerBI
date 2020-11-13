@@ -1,0 +1,8 @@
+ABC RUR = 
+  var totalSales = CALCULATE(SUM('tabular'[NKA Off-Take, RUR]);ALLSELECTED('tabular'))
+  var currentSales = Sum('tabular'[NKA Off-Take, RUR])
+  var summarizedTable = SUMMARIZE(ALLSELECTED('tabular');tabular[Продукция.EAN Name Eng];"Sales";SUM(tabular[NKA Off-Take, RUR]))
+  var CumulativeSum = Sumx(FILTER(summarizedTable;[Sales]>=currentSales);[Sales])
+  var cumulativePer = CumulativeSum/totalSales
+  var ABC_class = IF(cumulativePer<=0,8;"A";IF(cumulativePer<=0,95;"B";"C"))
+return ABC_class
